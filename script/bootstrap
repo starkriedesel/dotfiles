@@ -137,8 +137,29 @@ install_dotfiles () {
   done
 }
 
+install_submodules () {
+  info "updating git submodules...\n"
+  git submodule init && git submodule update && success 'submodules updated'
+}
+
+install_vundle () {
+  local bundle_dir=$HOME/.vim/bundle
+  local vundle_dir=$bundle_dir/Vundle.vim
+  if [ -n "$(ls -A $vundle_dir)" ] ; then
+    success 'Vunlde already installed'
+  else
+    info "installing Vundle\n"
+    mkdir -p $bundle_dir
+    git clone https://github.com/gmarik/Vundle.vim.git "$vundle_dir"
+  fi
+  info "installing/updating vundle packages\n"
+  vim +PluginInstall +qall
+}
+
 setup_gitconfig
 install_dotfiles
+install_submodules
+install_vundle
 
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
