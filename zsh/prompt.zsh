@@ -71,18 +71,25 @@ directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
-if [ $UID -eq 0 ]; then USER="%m"; else USER="%n@%m"; fi
-#export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
-export PROMPT='%{$fg[$NCOLOR]%}%B$USER %{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
-#export PROMPT='%{$fg[$NCOLOR]%}%B%{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
-set_prompt () {
-  #export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
-  export RPROMPT='[%*]'
-}
-export PS1=$PROMPT
+# Use starship or fallback to custom
+if type starship > /dev/null; then
+  eval $(starship init zsh)
+else
 
-precmd() {
-  title "zsh" "%m" "%55<...<%~"
-  set_prompt
-}
+  if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
+  if [ $UID -eq 0 ]; then USER="%m"; else USER="%n@%m"; fi
+  #export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
+  export PROMPT='%{$fg[$NCOLOR]%}%B$USER %{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
+  #export PROMPT='%{$fg[$NCOLOR]%}%B%{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
+  set_prompt () {
+    #export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
+    export RPROMPT='[%*]'
+  }
+  export PS1=$PROMPT
+
+  precmd() {
+    title "zsh" "%m" "%55<...<%~"
+    set_prompt
+  }
+
+fi
