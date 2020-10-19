@@ -28,7 +28,7 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/gitconfig.local.symlink ]
+  if ! [ -f $HOME/.gitconfig.local ]
   then
     info 'setup gitconfig'
 
@@ -153,7 +153,7 @@ install_vundle () {
     git clone https://github.com/gmarik/Vundle.vim.git "$vundle_dir"
   fi
   info "installing/updating vundle packages\n"
-  vim +PluginInstall +qall
+  vim +PlugInstall +qall >/dev/null 2>&1
 }
 
 setup_gitconfig
