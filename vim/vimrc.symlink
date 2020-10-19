@@ -52,7 +52,7 @@ filetype plugin indent on
 " Color
 syntax on
 set t_Co=256
-color molokai
+silent! color molokai
 
 " Set encoding early
 scriptencoding utf-8
