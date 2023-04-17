@@ -77,9 +77,9 @@ if type starship > /dev/null; then
 else
 
   if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
-  if [ $UID -eq 0 ]; then USER="%m"; else USER="%n@%m"; fi
+  if [ $UID -eq 0 ]; then PROMPT_USER="%m"; else PROMPT_USER="%n@%m"; fi
   #export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
-  export PROMPT='%{$fg[$NCOLOR]%}%B$USER %{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
+  export PROMPT='%{$fg[$NCOLOR]%}%B$PROMPT_USER %{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
   #export PROMPT='%{$fg[$NCOLOR]%}%B%{$fg[cyan]%}%~%b%{$reset_color%} $(git_dirty)%(!.#.$) '
   set_prompt () {
     #export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"

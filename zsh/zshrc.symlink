@@ -20,6 +20,12 @@ fi
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
 
+# Brew needs to be aded to the path first so other path.zsh files can use it
+if [[ -d /opt/homebrew/bin ]]
+then
+  path+=(/opt/homebrew/bin)
+fi
+
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
 do
