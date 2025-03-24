@@ -73,7 +73,8 @@ directory_name() {
 
 # Use starship or fallback to custom
 if type starship > /dev/null; then
-  eval $(starship init zsh)
+  #eval $(starship init zsh)
+  starship init zsh > /tmp/zsh_starship_init && source /tmp/zsh_starship_init && rm /tmp/zsh_starship_init
 else
 
   if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
